@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.util.Log;
 
 import com.facebook.common.logging.FLog;
@@ -26,7 +27,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 public class OrientationModule extends ReactContextBaseJavaModule implements LifecycleEventListener{
-    final BroadcastReceiver receiver;
+    BroadcastReceiver receiver;
 
     public OrientationModule(ReactApplicationContext reactContext) {
         super(reactContext);

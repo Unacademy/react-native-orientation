@@ -155,7 +155,7 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
         // For Android 12 (API level 31) or higher
         IntentFilter filter = new IntentFilter("onConfigurationChanged");
        // activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"));
-        activity.registerReceiver(receiver, filter, Context.RECEIVER_EXPORTED); // Use RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED
+        activity.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED); // Use RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED
       } else {
        // For older versions
         activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"));

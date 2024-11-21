@@ -3,7 +3,7 @@
 <application>
  <receiver
    android:name=".OrientationReceiver"
-   android:exported="true"
+   android:exported="false"
  >
  <intent-filter>
    <action android:name="onConfigurationChanged" />

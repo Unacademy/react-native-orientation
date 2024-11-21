@@ -32,23 +32,23 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
         super(reactContext);
         final ReactApplicationContext ctx = reactContext;
 
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Configuration newConfig = intent.getParcelableExtra("newConfig");
-                Log.d("receiver", String.valueOf(newConfig.orientation));
+        // receiver = new BroadcastReceiver() {
+        //     @Override
+        //     public void onReceive(Context context, Intent intent) {
+        //         Configuration newConfig = intent.getParcelableExtra("newConfig");
+        //         Log.d("receiver", String.valueOf(newConfig.orientation));
 
-                String orientationValue = newConfig.orientation == 1 ? "PORTRAIT" : "LANDSCAPE";
+        //         String orientationValue = newConfig.orientation == 1 ? "PORTRAIT" : "LANDSCAPE";
 
-                WritableMap params = Arguments.createMap();
-                params.putString("orientation", orientationValue);
-                if (ctx.hasActiveCatalystInstance()) {
-                    ctx
-                    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    .emit("orientationDidChange", params);
-                }
-            }
-        };
+        //         WritableMap params = Arguments.createMap();
+        //         params.putString("orientation", orientationValue);
+        //         if (ctx.hasActiveCatalystInstance()) {
+        //             ctx
+        //             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+        //             .emit("orientationDidChange", params);
+        //         }
+        //     }
+        // };
         ctx.addLifecycleEventListener(this);
     }
 
@@ -150,7 +150,16 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
             FLog.e(ReactConstants.TAG, "no activity to register receiver");
             return;
         }
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        // For Android 12 (API level 31) or higher
+        IntentFilter filter = new IntentFilter("onConfigurationChanged");
+       // activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"));
+        activity.registerReceiver(receiver, filter, Context.RECEIVER_EXPORTED); // Use RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED
+      } else {
+       // For older versions
         activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"));
+      }
+        //activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"));
     }
     @Override
     public void onHostPause() {

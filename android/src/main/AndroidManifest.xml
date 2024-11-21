@@ -1,4 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.github.yamill.orientation">
-
+<application>
+ <receiver
+   android:name=".OrientationReceiver"
+   android:exported="true"
+ >
+ <intent-filter>
+   <action android:name="onConfigurationChanged" />
+  </intent-filter>
+</receiver>
+</application>
 </manifest>
